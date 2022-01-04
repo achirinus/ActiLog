@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ActiveMe</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="sort_array">
+        <item>Sort By Date Asc</item>
+        <item>Sort By Date Desc</item>
+        <item>Sort By Type</item>
+    </string-array>
+</resources>

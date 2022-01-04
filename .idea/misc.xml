@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.346875" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/drawable/ic_launcher_background.xml" value="0.346875" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_base.xml" value="0.25" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_drawing.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_gaming.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_heavybag.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_item.xml" value="0.33" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_language.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_mentaltraining.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_reading.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_running.xml" value="0.3307291666666667" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_skills.xml" value="0.35833333333333334" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_treadmill.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_unrealengine.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_add_weightlift.xml" value="0.3307291666666667" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_item.xml" value="0.49230072463768115" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_main_2.xml" value="0.33" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_select_item_to_add.xml" value="0.33" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_tag_item.xml" value="0.33" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/activity_type_item.xml" value="0.5541666666666667" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/fragment_entries.xml" value="0.35" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/fragment_list.xml" value="0.25" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/fragment_tab_base.xml" value="0.36041666666666666" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/fragment_tags.xml" value="0.33" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/fragment_type.xml" value="0.35" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/item_to_select.xml" value="0.5541666666666667" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/list_entry_item.xml" value="0.35" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/list_tag_item.xml" value="0.35" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/list_to_add_item.xml" value="0.3307291666666667" />
+        <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/list_type_item.xml" value="0.35" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
