@@ -73,7 +73,7 @@ class AddItemActivity : AppCompatActivity() {
                     val editReps: EditText = findViewById(R.id.editReps)
                     val editKg: EditText = findViewById(R.id.editKg)
 
-                    act.itemNameText = editItemName.text.toString()
+                    act.itemName = editItemName.text.toString()
                     act.sets = editSets.text.toString().toInt()
                     act.reps = editReps.text.toString().toInt()
                     act.kg = editKg.text.toString().toInt()
@@ -115,7 +115,7 @@ class AddItemActivity : AppCompatActivity() {
                     val editPages: EditText = findViewById(R.id.editPages)
 
                     act.pages = editPages.text.toString().toInt()
-                    act.itemNameText = editItemName.text.toString()
+                    act.itemName = editItemName.text.toString()
                     setEntryTagsFromSwitch(act)
                 }
 
@@ -130,7 +130,7 @@ class AddItemActivity : AppCompatActivity() {
 
                     val editItemName: EditText = findViewById(R.id.editItemName)
 
-                    act.itemNameText = editItemName.text.toString()
+                    act.itemName = editItemName.text.toString()
                     setEntryTagsFromSwitch(act)
                 }
 
@@ -142,7 +142,7 @@ class AddItemActivity : AppCompatActivity() {
 
                     val editItemName: EditText = findViewById(R.id.editItemName)
 
-                    act.itemNameText = editItemName.text.toString()
+                    act.itemName = editItemName.text.toString()
                     setEntryTagsFromSwitch(act)
                 }
             }
@@ -156,7 +156,7 @@ class AddItemActivity : AppCompatActivity() {
 
                     val editItemName: EditText = findViewById(R.id.editItemName)
 
-                    act.itemNameText = editItemName.text.toString()
+                    act.itemName = editItemName.text.toString()
                     setEntryTagsFromSwitch(act)
                 }
 

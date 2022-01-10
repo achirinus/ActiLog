@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activeme.activities.MainActivity
 import com.example.activeme.R
-import com.example.activeme.adapters.ActivityTagAdapter
+import com.example.activeme.adapters.EntryTagAdapter
 
 
 class TagsFragment : Fragment() {
@@ -23,7 +23,7 @@ class TagsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val activityList : RecyclerView = view.findViewById(R.id.activityList);
         activityList.setHasFixedSize(true)
-        activityList.adapter = ActivityTagAdapter(view.context, MainActivity.actData);
+        activityList.adapter = EntryTagAdapter(view.context, MainActivity.actData);
     }
 
 }

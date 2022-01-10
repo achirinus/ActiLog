@@ -16,6 +16,9 @@ class EntryDuration (var hours: Int, var minutes: Int, var seconds: Int){
         }
     }
 
+    constructor() : this(0,0, 0) {
+    }
+
     public override fun toString() : String {
         return "${hours}H ${minutes}m ${seconds}s"
     }

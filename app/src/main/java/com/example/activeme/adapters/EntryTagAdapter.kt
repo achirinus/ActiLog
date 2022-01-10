@@ -14,8 +14,8 @@ import com.example.activeme.entry.EntryData
 import com.example.activeme.entry.EntryDuration
 import com.example.activeme.entry.EntryTag
 
-class ActivityTagAdapter (private val context: Context, private val data: EntryData)
-    : Adapter<ActivityTagAdapter.ActivityTagViewHolder>() {
+class EntryTagAdapter (private val context: Context, private val data: EntryData)
+    : Adapter<EntryTagAdapter.ActivityTagViewHolder>() {
 
     class ActivityTagViewHolder(private val view: View) : ViewHolder(view) {
         val baseCard: CardView = view.findViewById(R.id.baseCard)
@@ -29,7 +29,7 @@ class ActivityTagAdapter (private val context: Context, private val data: EntryD
         val adapterLayout = LayoutInflater.from(parent.context).
         inflate(R.layout.list_tag_item, parent, false);
 
-        return ActivityTagAdapter.ActivityTagViewHolder(adapterLayout);
+        return EntryTagAdapter.ActivityTagViewHolder(adapterLayout);
     }
 
     override fun onBindViewHolder(holder: ActivityTagViewHolder, position: Int) {

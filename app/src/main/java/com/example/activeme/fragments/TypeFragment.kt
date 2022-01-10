@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activeme.activities.MainActivity
 import com.example.activeme.R
-import com.example.activeme.adapters.ActivityTypeAdapter
+import com.example.activeme.adapters.EntryTypeAdapter
 
 
 class TypeFragment : Fragment() {
@@ -20,7 +20,7 @@ class TypeFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_type, container, false)
 
         val activityList : RecyclerView = view.findViewById(R.id.activityList);
-        activityList.adapter = ActivityTypeAdapter(view.context, MainActivity.actData);
+        activityList.adapter = EntryTypeAdapter(view.context, MainActivity.actData);
 
         return view
     }

@@ -96,9 +96,24 @@ class EntryData {
         for(act in typeMap[type]!!)
         {
             val changedAct = act as EntryItemWithName
-            set.add(changedAct.itemNameText)
+            set.add(changedAct.itemName)
         }
         return set.toTypedArray()
+    }
+
+    fun getNamedItemsOfType(itemType: EntryType, itemName: String) : MutableList<EntryItem> {
+        var namedItemList: MutableList<EntryItem> = mutableListOf()
+
+        val itemList = typeMap[itemType]!!
+        for(item in itemList)
+        {
+            val namedItem = item as EntryItemWithName
+            if(namedItem.itemName == itemName)
+            {
+                namedItemList.add(item)
+            }
+        }
+        return namedItemList
     }
 
 }

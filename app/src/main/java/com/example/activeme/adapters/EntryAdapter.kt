@@ -74,6 +74,15 @@ class EntryItemAdapter (private val context: Context, private val dataList: List
         val item = dataList[position];
         setAllDefaultsGone(holder);
 
+        if(item is EntryItemWithName)
+        {
+            if((item.itemTitle == null) || item.itemTitle.isEmpty())
+            {
+                val tempItem = EntryItemBuilder.build(item.type, EntryDateTime(), EntryDuration()) as EntryItemWithName
+                item.itemTitle =tempItem.itemTitle
+            }
+        }
+
         holder.nameText.text = item.getName();
         holder.dateText.text = item.date.toString()
         holder.durationText.text = item.duration.toString();
@@ -135,8 +144,8 @@ class EntryItemAdapter (private val context: Context, private val dataList: List
                 holder.weightText.text = castedItem.kg.toString()
 
                 holder.itemNameLayout.visibility = View.VISIBLE
-                holder.itemNameText.text = castedItem.itemName
-                holder.itemNameValText.text = castedItem.itemNameText
+                holder.itemNameText.text = castedItem.itemTitle
+                holder.itemNameValText.text = castedItem.itemName
             }
             EntryType.Treadmill -> {
                 val castedItem = item as EntryItemTreadMill
@@ -151,9 +160,10 @@ class EntryItemAdapter (private val context: Context, private val dataList: List
             }
             EntryType.Reading -> {
                 val castedItem = item as EntryItemReading
+
                 holder.itemNameLayout.visibility = View.VISIBLE
-                holder.itemNameText.text = castedItem.itemName
-                holder.itemNameValText.text = castedItem.itemNameText
+                holder.itemNameText.text = castedItem.itemTitle
+                holder.itemNameValText.text = castedItem.itemName
 
                 holder.pagesLayout.visibility = View.VISIBLE
                 holder.pagesText.text = castedItem.pages.toString()
@@ -161,20 +171,20 @@ class EntryItemAdapter (private val context: Context, private val dataList: List
             EntryType.Language -> {
                 val castedItem = item as EntryItemLanguage
                 holder.itemNameLayout.visibility = View.VISIBLE
-                holder.itemNameText.text = castedItem.itemName
-                holder.itemNameValText.text = castedItem.itemNameText
+                holder.itemNameText.text = castedItem.itemTitle
+                holder.itemNameValText.text = castedItem.itemName
             }
             EntryType.Skill -> {
                 val castedItem = item as EntryItemSkill
                 holder.itemNameLayout.visibility = View.VISIBLE
-                holder.itemNameText.text = castedItem.itemName
-                holder.itemNameValText.text = castedItem.itemNameText
+                holder.itemNameText.text = castedItem.itemTitle
+                holder.itemNameValText.text = castedItem.itemName
             }
             EntryType.Gaming -> {
                 val castedItem = item as EntryItemGaming
                 holder.itemNameLayout.visibility = View.VISIBLE
-                holder.itemNameText.text = castedItem.itemName
-                holder.itemNameValText.text = castedItem.itemNameText
+                holder.itemNameText.text = castedItem.itemTitle
+                holder.itemNameValText.text = castedItem.itemName
             }
         }
     }

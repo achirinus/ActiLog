@@ -44,8 +44,8 @@ class EntryItemRunning (date: EntryDateTime, duration: EntryDuration) : EntryIte
     }
 }
 
-open class EntryItemWithName (type : EntryType, date: EntryDateTime, duration: EntryDuration, val itemName: String, tags: MutableSet<EntryTag>) : EntryItem(type, date, duration, tags) {
-    open var itemNameText: String = ""
+open class EntryItemWithName (type : EntryType, date: EntryDateTime, duration: EntryDuration, var itemTitle: String, tags: MutableSet<EntryTag>) : EntryItem(type, date, duration, tags) {
+    open var itemName: String = ""
 }
 
 class EntryItemWeightLifting (date: EntryDateTime, duration: EntryDuration) : EntryItemWithName(
