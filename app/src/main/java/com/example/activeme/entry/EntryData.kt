@@ -6,7 +6,7 @@ class EntryData {
     val tagMap: MutableMap<EntryTag, MutableList<EntryItem>> = mutableMapOf()
     val typeMap: MutableMap<EntryType, MutableList<EntryItem>> = mutableMapOf()
 
-    var datalLists: EntryDataLists = EntryDataLists()
+    var dataLists: EntryDataLists = EntryDataLists()
     var entriesList: MutableList<EntryItem> = mutableListOf()
     constructor() {
         clearAll()
@@ -22,7 +22,7 @@ class EntryData {
         {
             typeMap[actType] = mutableListOf()
         }
-        datalLists = EntryDataLists()
+        dataLists = EntryDataLists()
         entriesList = mutableListOf()
     }
 
@@ -36,7 +36,7 @@ class EntryData {
 
     public fun addEntry(act: EntryItem) {
         entriesList.add(act)
-        datalLists.add(act)
+        dataLists.add(act)
         for(actTag in  act.tags)
         {
             tagMap[actTag]?.add(act)
@@ -46,7 +46,7 @@ class EntryData {
 
     public fun removeEntry(act: EntryItem) {
         entriesList.remove(act)
-        datalLists.remove(act)
+        dataLists.remove(act)
         for(actTag in  act.tags)
         {
             tagMap[actTag]?.remove(act)

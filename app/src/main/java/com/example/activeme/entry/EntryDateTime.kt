@@ -34,6 +34,10 @@ class EntryDateTime :Comparable<EntryDateTime>{
     fun toDateString() : String {
        return "${day}-${month}-${year}"
     }
+    fun toStringForPath() : String {
+        return "${day}-${month}-${year}-${hour}:${minute}:${second}"
+    }
+
 
     override fun compareTo(other: EntryDateTime): Int {
         if(year > other.year)

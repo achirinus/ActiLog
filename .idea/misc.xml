@@ -34,7 +34,23 @@
         <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/list_tag_item.xml" value="0.35" />
         <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/list_to_add_item.xml" value="0.3307291666666667" />
         <entry key="..\:/workspace/ActiveMeAndroid/app/src/main/res/layout/list_type_item.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_add_base.xml" value="0.3307291666666667" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_add_gaming.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_add_heavybag.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_add_language.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_add_reading.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_add_skills.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_add_weightlift.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_main.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/activity_restore_backup.xml" value="0.3307291666666667" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/fragment_entries.xml" value="0.3307291666666667" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/fragment_tab_base.xml" value="0.3307291666666667" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/fragment_tags.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/fragment_type.xml" value="0.35" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/list_entry_item.xml" value="0.3307291666666667" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/list_restore_item.xml" value="0.3307291666666667" />
         <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/layout/list_type_item.xml" value="0.5541666666666667" />
+        <entry key="..\:/workspace/Android/ActiveMeAndroid/app/src/main/res/menu/main_menu.xml" value="0.35" />
       </map>
     </option>
   </component>

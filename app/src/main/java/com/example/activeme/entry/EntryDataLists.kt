@@ -101,4 +101,8 @@ class EntryDataLists {
             }
         }
     }
+
+    fun getSize() : Int {
+        return runningList.size + weightList.size + treadList.size + bagList.size + readingList.size + languageList.size + skillList.size + gamingList.size
+    }
 }

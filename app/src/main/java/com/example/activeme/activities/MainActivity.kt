@@ -5,26 +5,30 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.activeme.R
-import com.example.activeme.entry.EntryData
-import com.example.activeme.entry.EntryDataLists
-import com.example.activeme.entry.EntryDateTime
-import com.example.activeme.entry.EntryItem
+import com.example.activeme.entry.*
 import com.example.activeme.fragments.EntriesFragment
 import com.example.activeme.fragments.TagsFragment
 import com.example.activeme.fragments.TypeFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
+import java.io.File
 import java.io.FileNotFoundException
+import java.time.Duration
+import java.time.Instant
 import java.time.LocalDateTime
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
         var actData: EntryData = EntryData()
         var lastTabSelected: Int = 0
+        var savedData: MutableList<EntrySaveData> = mutableListOf()
 
         const val ENTRY_SAVE_FILE_NAME = "save.json"
         const val SETTINGS_SAVE_FILE_NAME = "settings.json"
@@ -33,33 +37,101 @@ class MainActivity : AppCompatActivity() {
 
         }
         fun saveEntries(context: Context) {
-            val jsonString = Gson().toJson(actData.datalLists)
+            val jsonString = Gson().toJson(actData.dataLists)
             context.openFileOutput(ENTRY_SAVE_FILE_NAME, Activity.MODE_PRIVATE).use {
                 it.write(jsonString.toByteArray())
             }
         }
-    }
-
-    fun loadEntries() {
-        var savedJson : String = ""
-        try
-        {
-            val inputStream = openFileInput(ENTRY_SAVE_FILE_NAME)
-            savedJson = inputStream.bufferedReader().readText()
-
-            var actDataLists = Gson().fromJson(savedJson, EntryDataLists::class.java)
-            actData.fromLists(actDataLists)
-
-            val timeNow = LocalDateTime.now()
-            val customTime = EntryDateTime(timeNow)
-            val customTimeString = customTime.toDateString()
-            val cacheFileName = "${customTimeString}-$ENTRY_SAVE_FILE_NAME"
-            openFileOutput(cacheFileName, Activity.MODE_PRIVATE).use {
+        fun restoreSave(context: Context, saveData: EntrySaveData) {
+            //Save current file to a temp
+            val savedJson = context.openFileInput(ENTRY_SAVE_FILE_NAME).bufferedReader().readText()
+            context.openFileOutput("temp.json", Activity.MODE_PRIVATE).use {
                 it.write(savedJson.toByteArray())
             }
-        } catch (e: FileNotFoundException)
-        {
-            e.printStackTrace()
+
+            //Move backup into current save
+            val backupJson = context.openFileInput(saveData.name).bufferedReader().readText()
+            context.openFileOutput(ENTRY_SAVE_FILE_NAME, Activity.MODE_PRIVATE).use {
+                it.write(backupJson.toByteArray())
+            }
+
+            //Make backup from temp
+            val timeNow = LocalDateTime.now()
+            val customTime = EntryDateTime(timeNow)
+            val customTimeString = customTime.toStringForPath()
+            val cacheFileName = "${customTimeString}-$ENTRY_SAVE_FILE_NAME"
+            context.openFileOutput(cacheFileName, Activity.MODE_PRIVATE).use {
+                it.write(savedJson.toByteArray())
+            }
+
+            val tempFile = File("${context.filesDir}/temp.json")
+            if(tempFile.exists()) tempFile.delete()
+
+            reloadBackupFiles(context)
+        }
+
+        fun removeSave(context: Context, saveData: EntrySaveData) {
+            val backup = File("${context.filesDir}/${saveData.name}")
+            if(backup.exists()) backup.delete()
+            reloadBackupFiles(context)
+        }
+
+        fun reloadBackupFiles(context: Context) {
+            val filesArr = context.fileList()
+
+            savedData.clear()
+
+            for(fileName in filesArr) {
+                if(fileName == ENTRY_SAVE_FILE_NAME) continue
+                if(!fileName.endsWith("save.json")) continue
+                try{
+                   val backupFile = File("${context.filesDir.absolutePath}/${fileName}")
+                   val inputStream = backupFile.inputStream()
+                   val backupJson = inputStream.bufferedReader().readText()
+                   var backupLists = Gson().fromJson(backupJson, EntryDataLists::class.java)
+
+                   val lastModTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(backupFile.lastModified()), TimeZone.getDefault().toZoneId())
+                   val customTime = EntryDateTime(lastModTime)
+
+                   savedData.add(EntrySaveData(fileName, backupLists, customTime))
+                }catch (e: JsonSyntaxException)
+                {
+                   e.printStackTrace()
+                }
+            }
+            savedData.sortByDescending { it.dateModified }
+        }
+        fun loadEntries(context: Context) {
+            var savedJson : String = ""
+            try
+            {
+                val savedFile = File("${context.filesDir.absolutePath}/${ENTRY_SAVE_FILE_NAME}")
+                val lastMod = savedFile.lastModified()
+                val inputStream = context.openFileInput(ENTRY_SAVE_FILE_NAME)
+                savedJson = inputStream.bufferedReader().readText()
+
+                var actDataLists = Gson().fromJson(savedJson, EntryDataLists::class.java)
+                actData.fromLists(actDataLists)
+
+                val lastModTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(lastMod), TimeZone.getDefault().toZoneId())
+                val timeNow = LocalDateTime.now()
+
+                val dur = Duration.between(lastModTime, timeNow)
+                if(dur.toDays() > 1)
+                {
+                    val customTime = EntryDateTime(timeNow)
+                    val customTimeString = customTime.toStringForPath()
+                    val cacheFileName = "${customTimeString}-$ENTRY_SAVE_FILE_NAME"
+                    context.openFileOutput(cacheFileName, Activity.MODE_PRIVATE).use {
+                        it.write(savedJson.toByteArray())
+                    }
+                }
+
+                reloadBackupFiles(context)
+            } catch (e: FileNotFoundException)
+            {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -100,15 +172,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadEntries()
+        loadEntries(this)
         setupTabs()
-        val floatingButton: FloatingActionButton = findViewById(R.id.addButton)
-        floatingButton.setOnClickListener {
-            val tabLayout: TabLayout = findViewById(R.id.tab_layout)
-            lastTabSelected = tabLayout.selectedTabPosition
-            val intent = Intent(it.context, SelectItemToAddActivity::class.java)
-            it.context.startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId)
+        {
+            R.id.menuAdd -> {
+                val tabLayout: TabLayout = findViewById(R.id.tab_layout)
+                lastTabSelected = tabLayout.selectedTabPosition
+                val intent = Intent(this, SelectItemToAddActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menuHistory -> {
+                val intent = Intent(this, RestoreBackupActivity::class.java)
+                startActivity(intent)
+            }
         }
+
+        return super.onOptionsItemSelected(item)
     }
 }
 
