@@ -9,6 +9,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import com.example.activeme.R
 import com.example.activeme.entry.*
 import java.time.LocalDateTime
@@ -62,8 +64,10 @@ class AddItemActivity : AppCompatActivity() {
             EntryType.WeightLifting -> {
                 setContentView(R.layout.activity_add_weightlift)
 
-                val editItem: EditText = findViewById(R.id.editItemName)
-                registerForContextMenu(editItem)
+                val editItem: AutoCompleteTextView = findViewById(R.id.editItemName)
+                val arr = MainActivity.actData.getAlreadyEnteredItemArray(currentType)
+                val adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arr)
+                editItem.setAdapter(adapter)
 
                 miscFunc = {
                     val act = makeBaseActivity(EntryType.WeightLifting) as EntryItemWeightLifting
@@ -106,8 +110,10 @@ class AddItemActivity : AppCompatActivity() {
             EntryType.Reading -> {
                 setContentView(R.layout.activity_add_reading)
 
-                val editItem: EditText = findViewById(R.id.editItemName)
-                registerForContextMenu(editItem)
+                val editItem: AutoCompleteTextView = findViewById(R.id.editItemName)
+                val arr = MainActivity.actData.getAlreadyEnteredItemArray(currentType)
+                val adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arr)
+                editItem.setAdapter(adapter)
                 miscFunc = {
                     val act = makeBaseActivity(EntryType.Reading) as EntryItemReading
 
@@ -123,8 +129,10 @@ class AddItemActivity : AppCompatActivity() {
             EntryType.Language -> {
                 setContentView(R.layout.activity_add_language)
 
-                val editItem: EditText = findViewById(R.id.editItemName)
-                registerForContextMenu(editItem)
+                val editItem: AutoCompleteTextView = findViewById(R.id.editItemName)
+                val arr = MainActivity.actData.getAlreadyEnteredItemArray(currentType)
+                val adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arr)
+                editItem.setAdapter(adapter)
                 miscFunc = {
                     val act = makeBaseActivity(EntryType.Language) as EntryItemLanguage
 
@@ -137,6 +145,11 @@ class AddItemActivity : AppCompatActivity() {
             }
             EntryType.Skill -> {
                 setContentView(R.layout.activity_add_skills)
+
+                val editItem: AutoCompleteTextView = findViewById(R.id.editItemName)
+                val arr = MainActivity.actData.getAlreadyEnteredItemArray(currentType)
+                val adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arr)
+                editItem.setAdapter(adapter)
                 miscFunc = {
                    val act = makeBaseActivity(EntryType.Skill) as EntryItemSkill
 
@@ -149,8 +162,11 @@ class AddItemActivity : AppCompatActivity() {
             EntryType.Gaming -> {
                 setContentView(R.layout.activity_add_gaming)
 
-                val editItem: EditText = findViewById(R.id.editItemName)
-                registerForContextMenu(editItem)
+                val editItem: AutoCompleteTextView = findViewById(R.id.editItemName)
+                val arr = MainActivity.actData.getAlreadyEnteredItemArray(currentType)
+                val adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arr)
+                editItem.setAdapter(adapter)
+
                 miscFunc = {
                     val act = makeBaseActivity(EntryType.Gaming) as EntryItemGaming
 
@@ -238,10 +254,21 @@ class AddItemActivity : AppCompatActivity() {
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
+
+        if(v !is TextView) return
+        val textView = v as TextView
+
+        val inputText = textView.text
+
+        //if(textView.text.isEmpty()) return
+
         val arr = MainActivity.actData.getAlreadyEnteredItemArray(currentType)
         for(str in  arr)
         {
-            menu?.add(0, v?.id!!, 0, str)
+            if(str.startsWith(inputText))
+            {
+                menu?.add(0, v?.id!!, 0, str)
+            }
         }
     }
 
