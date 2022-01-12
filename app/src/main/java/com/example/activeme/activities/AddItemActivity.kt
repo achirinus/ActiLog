@@ -43,7 +43,7 @@ class AddItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-        var miscFunc = {}
+        var miscFunc = { }
 
         val enumName: String = intent?.extras?.getString(ITEM_TYPE)!!
         val type = EntryType.valueOf(enumName)
