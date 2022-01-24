@@ -10,7 +10,7 @@
     <color name="almostBlack">#1A1A1A</color>
     <color name="white">#FFFFFFFF</color>
     <color name="almostWhite">#E6E6E6</color>
-
+    <color name="red">#FF0000</color>
     <color name="darkYellow">#616100</color>
     <color name="darkGreen">#066100</color>
     <color name="darkCyan">#005961</color>

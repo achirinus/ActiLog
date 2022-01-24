@@ -8,6 +8,7 @@ android:layout_height="match_parent"
 tools:context=".activities.MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -42,5 +43,15 @@ tools:context=".activities.MainActivity">
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/profileFrameLayout"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="210dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

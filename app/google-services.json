@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "293564907340",
+    "project_id": "actilog-7544c",
+    "storage_bucket": "actilog-7544c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293564907340:android:4c1170064efbff4774d9e9",
+        "android_client_info": {
+          "package_name": "com.achirinus.actilog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293564907340-73l9hduguo90u6fqoomcfi0fmkq4kfu0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.achirinus.actilog",
+            "certificate_hash": "493835cccd95e76ca7ea3c8ef914553601afe47d"
+          }
+        },
+        {
+          "client_id": "293564907340-qi4118d0ll7t2cbdrt2782iuk3rfrv71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIAdvxUGuuC6uSlb_sy-vcUNqfwyDS0t0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293564907340-qi4118d0ll7t2cbdrt2782iuk3rfrv71.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

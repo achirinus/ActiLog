@@ -8,4 +8,20 @@
         <item>Sort By Date Desc</item>
         <item>Sort By Type</item>
     </string-array>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_signup">Sign Up</string>
+    <string name="prompt_login">Login</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="email_hint">Email</string>
+    <string name="pass_hint">Password</string>
+    <string name="pass2_hint">Repeat Password</string>
+    <string name="invalid_email">Invalid Email Format</string>
+    <string name="invalid_pass">Invalid Password</string>
+    <string name="small_pass">Password must have more than 5 characters</string>
+    <string name="pass_not_match">Password does not match</string>
+    <string name="missing_email">Email not registered</string>
 </resources>
