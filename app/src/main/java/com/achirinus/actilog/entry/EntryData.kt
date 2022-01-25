@@ -1,8 +1,9 @@
 package com.achirinus.actilog.entry
 
+import androidx.lifecycle.ViewModel
 
 
-class EntryData {
+class EntryData : ViewModel{
     val tagMap: MutableMap<EntryTag, MutableList<EntryItem>> = mutableMapOf()
     val typeMap: MutableMap<EntryType, MutableList<EntryItem>> = mutableMapOf()
 

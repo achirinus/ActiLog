@@ -1,6 +1,5 @@
 package com.achirinus.actilog.activities
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,14 +10,19 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
+import com.achirinus.actilog.ActiLogUser
+import com.achirinus.actilog.FirestoreDAO
 import com.achirinus.actilog.R
+import com.achirinus.actilog.interfaces.FirestoreCaller
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), FirestoreCaller {
+    private val TAG = "LoginActivity"
 
     private lateinit var auth: FirebaseAuth
+    val firestoreDAO: FirestoreDAO = FirestoreDAO
 
     lateinit var emailErrorTextView: TextView
     lateinit var passErrorTextView: TextView
@@ -40,6 +44,8 @@ class LoginActivity : AppCompatActivity() {
         if(currentUser != null)
         {
             Log.d(TAG, "User already logged in")
+            val actiUser = ActiLogUser(currentUser)
+            firestoreDAO.addUser(actiUser, this)
             startMainActivity()
         }
         emailErrorTextView = findViewById(R.id.emailErrorTextView)
@@ -117,13 +123,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
-        val currentUser = auth.currentUser
-        if(currentUser != null)
-        {
-            Log.d(TAG, "User already logged in")
-            startMainActivity()
-        }
     }
 
     fun createUserEmailPass(email: String, pass: String) {
@@ -132,8 +131,12 @@ class LoginActivity : AppCompatActivity() {
             if(task.isSuccessful) {
                 Log.d(TAG, "createUserWithEmail: success")
                 val user = auth.currentUser
+                if(user != null)
+                {
+                    val actiUser = ActiLogUser(user)
+                    firestoreDAO.addUser(actiUser, this)
+                }
                 startMainActivity()
-            //UpdateUI
             } else {
                 val erroMsg = task.exception?.message
                 if(erroMsg != null)
@@ -150,8 +153,12 @@ class LoginActivity : AppCompatActivity() {
             if(task.isSuccessful) {
                 Log.d(TAG, "signInUserWithEmail: success")
                 val user = auth.currentUser
+                if(user != null)
+                {
+                    val actiUser = ActiLogUser(user)
+                    firestoreDAO.addUser(actiUser, this)
+                }
                 startMainActivity()
-                //UpdateUI
             } else {
                 val erroMsg = task.exception?.message
                 if(erroMsg != null)
@@ -182,6 +189,7 @@ class LoginActivity : AppCompatActivity() {
     fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
     fun checkPassInput() {
         if(passEditText.text.count() < 5) {
@@ -197,5 +205,13 @@ class LoginActivity : AppCompatActivity() {
                 setPassError(R.string.pass_not_match)
             }
         }
+    }
+
+    override fun onAddUserSuccess(item: ActiLogUser) {
+        Log.d(TAG, "Added user to firestore")
+    }
+
+    override fun onAddUserFail() {
+        Log.d(TAG, "Failed to add user to firestore")
     }
 }

@@ -16,37 +16,37 @@ import com.achirinus.actilog.entry.*
 class EntryItemAdapter (private val context: Context, private val dataList: List<EntryItem>)
     : RecyclerView.Adapter<EntryItemAdapter.EntryItemViewHolder>(){
 
-    class EntryItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class EntryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val nameText: TextView = view.findViewById(R.id.nameText);
-        val dateText: TextView = view.findViewById(R.id.dateText);
-        val durationText: TextView = view.findViewById(R.id.durationText);
+        val nameText: TextView = view.findViewById(R.id.nameText)
+        val dateText: TextView = view.findViewById(R.id.dateText)
+        val durationText: TextView = view.findViewById(R.id.durationText)
 
-        val infoText: TextView = view.findViewById(R.id.infoText);
-        val infoLayout: LinearLayout = view.findViewById(R.id.infoLayout);
-        val tagSeparator: View = view.findViewById(R.id.tagSeparator);
-        val tagLayout: LinearLayout = view.findViewById(R.id.tagLayout);
-        val exerciseTag: ImageView = view.findViewById(R.id.exerciseTagView);
-        val learningTag: ImageView = view.findViewById(R.id.learningTagView);
-        val practiceTag: ImageView = view.findViewById(R.id.practiceTagView);
-        val funTag: ImageView = view.findViewById(R.id.funTagView);
-        val itemNameLayout : LinearLayout = view.findViewById(R.id.itemNameLayout);
-        val distanceLayout : LinearLayout = view.findViewById(R.id.distanceLayout);
-        val setsLayout : LinearLayout = view.findViewById(R.id.setsLayout);
-        val repsLayout : LinearLayout = view.findViewById(R.id.repsLayout);
-        val weightLayout : LinearLayout = view.findViewById(R.id.weightLayout);
-        val speedLayout : LinearLayout = view.findViewById(R.id.speedLayout);
-        val inclineLayout : LinearLayout = view.findViewById(R.id.inclineLayout);
-        val pagesLayout : LinearLayout = view.findViewById(R.id.pagesLayout);
+        val infoText: TextView = view.findViewById(R.id.infoText)
+        val infoLayout: LinearLayout = view.findViewById(R.id.infoLayout)
+        val tagSeparator: View = view.findViewById(R.id.tagSeparator)
+        val tagLayout: LinearLayout = view.findViewById(R.id.tagLayout)
+        val exerciseTag: ImageView = view.findViewById(R.id.exerciseTagView)
+        val learningTag: ImageView = view.findViewById(R.id.learningTagView)
+        val practiceTag: ImageView = view.findViewById(R.id.practiceTagView)
+        val funTag: ImageView = view.findViewById(R.id.funTagView)
+        val itemNameLayout : LinearLayout = view.findViewById(R.id.itemNameLayout)
+        val distanceLayout : LinearLayout = view.findViewById(R.id.distanceLayout)
+        val setsLayout : LinearLayout = view.findViewById(R.id.setsLayout)
+        val repsLayout : LinearLayout = view.findViewById(R.id.repsLayout)
+        val weightLayout : LinearLayout = view.findViewById(R.id.weightLayout)
+        val speedLayout : LinearLayout = view.findViewById(R.id.speedLayout)
+        val inclineLayout : LinearLayout = view.findViewById(R.id.inclineLayout)
+        val pagesLayout : LinearLayout = view.findViewById(R.id.pagesLayout)
 
-        val itemNameText : TextView = view.findViewById(R.id.itemNameText);
-        val distanceText : TextView = view.findViewById(R.id.distanceText);
-        val setsText : TextView = view.findViewById(R.id.setsText);
-        val repsText : TextView = view.findViewById(R.id.repsText);
-        val weightText : TextView = view.findViewById(R.id.weightText);
-        val speedText : TextView = view.findViewById(R.id.speedText);
-        val inclineText : TextView = view.findViewById(R.id.inclineText);
-        val pagesText : TextView = view.findViewById(R.id.pagesText);
+        val itemNameText : TextView = view.findViewById(R.id.itemNameText)
+        val distanceText : TextView = view.findViewById(R.id.distanceText)
+        val setsText : TextView = view.findViewById(R.id.setsText)
+        val repsText : TextView = view.findViewById(R.id.repsText)
+        val weightText : TextView = view.findViewById(R.id.weightText)
+        val speedText : TextView = view.findViewById(R.id.speedText)
+        val inclineText : TextView = view.findViewById(R.id.inclineText)
+        val pagesText : TextView = view.findViewById(R.id.pagesText)
         val itemNameValText : TextView = view.findViewById(R.id.itemNameValText)
 
         val removeEntry: Button = view.findViewById(R.id.removeEntry)
@@ -58,9 +58,9 @@ class EntryItemAdapter (private val context: Context, private val dataList: List
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context).
-        inflate(R.layout.list_entry_item, parent, false);
+        inflate(R.layout.list_entry_item, parent, false)
 
-        return EntryItemViewHolder(adapterLayout);
+        return EntryItemViewHolder(adapterLayout)
     }
 
     fun setAllDefaultsGone(holder: EntryItemViewHolder) {
@@ -71,58 +71,57 @@ class EntryItemAdapter (private val context: Context, private val dataList: List
     }
 
     override fun onBindViewHolder(holder: EntryItemViewHolder, position: Int) {
-        val item = dataList[position];
-        setAllDefaultsGone(holder);
+        val item = dataList[position]
+        setAllDefaultsGone(holder)
 
         if(item is EntryItemWithName)
         {
-            if((item.itemTitle == null) || item.itemTitle.isEmpty())
+            if(item.itemTitle.isEmpty())
             {
                 val tempItem = EntryItemBuilder.build(item.type, EntryDateTime(), EntryDuration()) as EntryItemWithName
                 item.itemTitle =tempItem.itemTitle
             }
         }
 
-        holder.nameText.text = item.getName();
+        holder.nameText.text = item.getName()
         holder.dateText.text = item.date.toString()
-        holder.durationText.text = item.duration.toString();
+        holder.durationText.text = item.duration.toString()
 
         holder.removeEntry.setOnClickListener{
-            MainActivity.removeEntry(item)
-            MainActivity.saveEntries(context)
-            this@EntryItemAdapter.notifyDataSetChanged()
+            val act = context as MainActivity
+            act.removeEntry(item)
         }
 
         if(item.info.isNotEmpty())
         {
-            holder.infoLayout.visibility = View.VISIBLE;
-            holder.infoText.text = item.info;
+            holder.infoLayout.visibility = View.VISIBLE
+            holder.infoText.text = item.info
         }
         else
         {
-            holder.infoLayout.visibility = View.GONE;
+            holder.infoLayout.visibility = View.GONE
         }
         if(item.tags.isNotEmpty())
         {
-            holder.tagSeparator.visibility = View.VISIBLE;
-            holder.tagLayout.visibility =View.VISIBLE;
+            holder.tagSeparator.visibility = View.VISIBLE
+            holder.tagLayout.visibility =View.VISIBLE
 
             for(tagItem in item.tags)
             {
                 when (tagItem)
                 {
-                    EntryTag.Exercise -> holder.exerciseTag.visibility = View.VISIBLE;
-                    EntryTag.Learning -> holder.learningTag.visibility = View.VISIBLE;
-                    EntryTag.Practice -> holder.practiceTag.visibility = View.VISIBLE;
-                    EntryTag.Fun -> holder.funTag.visibility = View.VISIBLE;
+                    EntryTag.Exercise -> holder.exerciseTag.visibility = View.VISIBLE
+                    EntryTag.Learning -> holder.learningTag.visibility = View.VISIBLE
+                    EntryTag.Practice -> holder.practiceTag.visibility = View.VISIBLE
+                    EntryTag.Fun -> holder.funTag.visibility = View.VISIBLE
                 }
             }
         }
         else
         {
-            setAllDefaultsGone(holder);
-            holder.tagSeparator.visibility = View.GONE;
-            holder.tagLayout.visibility = View.GONE;
+            setAllDefaultsGone(holder)
+            holder.tagSeparator.visibility = View.GONE
+            holder.tagLayout.visibility = View.GONE
         }
 
         when (item.type)
@@ -190,6 +189,6 @@ class EntryItemAdapter (private val context: Context, private val dataList: List
     }
 
     override fun getItemCount(): Int {
-        return dataList.size;
+        return dataList.size
     }
 }

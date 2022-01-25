@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.achirinus.actilog.activities.MainActivity
 import com.achirinus.actilog.R
+import com.achirinus.actilog.adapters.EntryItemAdapter
 import com.achirinus.actilog.adapters.EntryTagAdapter
 
 
-class TagsFragment : Fragment() {
+class TagsFragment : TabFragment() {
+    lateinit var itemAdapter: EntryTagAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -23,7 +26,13 @@ class TagsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val activityList : RecyclerView = view.findViewById(R.id.activityList);
         activityList.setHasFixedSize(true)
-        activityList.adapter = EntryTagAdapter(view.context, MainActivity.actData);
+
+        itemAdapter = EntryTagAdapter(view.context, MainActivity.actData);
+
+        activityList.adapter = itemAdapter
     }
 
+    override fun refreshList() {
+        itemAdapter.notifyDataSetChanged()
+    }
 }

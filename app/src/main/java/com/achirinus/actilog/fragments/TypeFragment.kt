@@ -11,7 +11,9 @@ import com.achirinus.actilog.R
 import com.achirinus.actilog.adapters.EntryTypeAdapter
 
 
-class TypeFragment : Fragment() {
+class TypeFragment : TabFragment() {
+    lateinit var itemAdapter: EntryTypeAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -20,9 +22,15 @@ class TypeFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_type, container, false)
 
         val activityList : RecyclerView = view.findViewById(R.id.activityList);
-        activityList.adapter = EntryTypeAdapter(view.context, MainActivity.actData);
+
+        itemAdapter = EntryTypeAdapter(view.context, MainActivity.actData);
+
+        activityList.adapter = itemAdapter
 
         return view
     }
 
+    override fun refreshList() {
+        itemAdapter.notifyDataSetChanged()
+    }
 }

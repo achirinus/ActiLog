@@ -1,19 +1,29 @@
 package com.achirinus.actilog.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.achirinus.actilog.ActiLogUser
+import com.achirinus.actilog.FirestoreDAO
 import com.achirinus.actilog.R
 import com.achirinus.actilog.entry.*
+import com.achirinus.actilog.interfaces.FirestoreCaller
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
 
-class AddItemActivity : AppCompatActivity() {
+class AddItemActivity : AppCompatActivity(), FirestoreCaller {
+    private val TAG = "AddItemActivity"
+    val firestoreDAO: FirestoreDAO = FirestoreDAO
+
     companion object{
         const val ITEM_TYPE = "type"
     }
@@ -30,18 +40,17 @@ class AddItemActivity : AppCompatActivity() {
             val dur: EntryDuration = EntryDuration.parseString(durationString)
             val act = EntryItemBuilder.build(type, EntryDateTime(timeNow), dur)
 
-            MainActivity.actData.addEntry(act)
             return act
         }catch (e: Exception) {
              throw e
         }
     }
 
+    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        var miscFunc = { }
+        var miscFunc: () -> EntryItem = {EntryItemSkill(EntryDateTime(), EntryDuration()) }
 
         val enumName: String = intent?.extras?.getString(ITEM_TYPE)!!
         val type = EntryType.valueOf(enumName)
@@ -57,6 +66,7 @@ class AddItemActivity : AppCompatActivity() {
                     act.distance = distanceEdit.text.toString().toInt()
 
                     setEntryTagsFromSwitch(act)
+                    act
                 }
             }
             EntryType.WeightLifting -> {
@@ -80,6 +90,7 @@ class AddItemActivity : AppCompatActivity() {
                     act.reps = editReps.text.toString().toInt()
                     act.kg = editKg.text.toString().toInt()
                     setEntryTagsFromSwitch(act)
+                    act
                 }
 
             }
@@ -94,6 +105,7 @@ class AddItemActivity : AppCompatActivity() {
                     act.speed = editSpeed.text.toString().toInt()
                     act.incline = editIncline.text.toString().toInt()
                     setEntryTagsFromSwitch(act)
+                    act
                 }
 
             }
@@ -102,6 +114,7 @@ class AddItemActivity : AppCompatActivity() {
                 miscFunc = {
                     val act = makeBaseActivity(EntryType.HeavyBag)
                     setEntryTagsFromSwitch(act)
+                    act
                 }
 
             }
@@ -121,6 +134,7 @@ class AddItemActivity : AppCompatActivity() {
                     act.pages = editPages.text.toString().toInt()
                     act.itemName = editItemName.text.toString()
                     setEntryTagsFromSwitch(act)
+                    act
                 }
 
             }
@@ -138,6 +152,7 @@ class AddItemActivity : AppCompatActivity() {
 
                     act.itemName = editItemName.text.toString()
                     setEntryTagsFromSwitch(act)
+                    act
                 }
 
             }
@@ -155,6 +170,7 @@ class AddItemActivity : AppCompatActivity() {
 
                     act.itemName = editItemName.text.toString()
                     setEntryTagsFromSwitch(act)
+                    act
                 }
             }
             EntryType.Gaming -> {
@@ -172,6 +188,7 @@ class AddItemActivity : AppCompatActivity() {
 
                     act.itemName = editItemName.text.toString()
                     setEntryTagsFromSwitch(act)
+                    act
                 }
 
             }
@@ -206,16 +223,18 @@ class AddItemActivity : AppCompatActivity() {
         addButton.setOnClickListener {
 
             try{
-                miscFunc.invoke()
-                MainActivity.saveEntries(this)
+                val entryItem = miscFunc.invoke()
+                firestoreDAO.addEntry(entryItem, this)
             }catch (e: Exception) {
+                Log.d(TAG, e.toString())
                 Toast.makeText(this@AddItemActivity, "Invalid duration input", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val intent = Intent(this@AddItemActivity, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            finish()
         }
     }
 
@@ -255,10 +274,7 @@ class AddItemActivity : AppCompatActivity() {
 
         if(v !is TextView) return
         val textView = v
-
         val inputText = textView.text
-
-        //if(textView.text.isEmpty()) return
 
         val arr = MainActivity.actData.getAlreadyEnteredItemArray(currentType)
         for(str in  arr)
@@ -274,5 +290,20 @@ class AddItemActivity : AppCompatActivity() {
         val editItemName: EditText = findViewById(R.id.editItemName)
         editItemName.setText(item.title)
         return true
+    }
+
+    override fun onAddEntrySuccess(item: EntryItem) {
+        MainActivity.actData.addEntry(item)
+        Log.d(TAG, "Added entry to firestore")
+    }
+
+    override fun onAddEntryFail() {
+        Log.d(TAG, "Failed to add entry to firestore")
+    }
+
+    override fun getUser(): ActiLogUser {
+        val user = Firebase.auth.currentUser
+        if(user != null) return ActiLogUser(user)
+        return ActiLogUser()
     }
 }

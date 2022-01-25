@@ -1,5 +1,6 @@
 package com.achirinus.actilog.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -32,6 +33,8 @@ class ItemToSelectListAdapter(private val context: Context, private val dataList
             val intent = Intent(holder.itemToSelectText.context, AddItemActivity::class.java)
             intent.putExtra(AddItemActivity.ITEM_TYPE, item.name)
             holder.itemToSelectText.context.startActivity(intent)
+            val act = holder.itemToSelectText.context as Activity
+            act.finish()
         }
     }
 

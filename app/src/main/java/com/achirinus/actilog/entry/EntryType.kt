@@ -2,14 +2,14 @@ package com.achirinus.actilog.entry
 
 enum class EntryType
 {
-    Running ,
+    Running,
     WeightLifting{
         override fun getCustomName() : String = "Weight Lifting";
-    },
+            },
     Treadmill,
     HeavyBag{
         override fun getCustomName() : String = "Heavy Bag";
-    },
+            },
     Reading,
     Language,
     Skill,

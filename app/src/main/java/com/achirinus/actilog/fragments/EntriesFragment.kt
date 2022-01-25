@@ -1,7 +1,7 @@
 package com.achirinus.actilog.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,32 +14,29 @@ import com.achirinus.actilog.R
 import com.achirinus.actilog.adapters.EntryItemAdapter
 
 
-class EntriesFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class EntriesFragment : TabFragment(), AdapterView.OnItemSelectedListener {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var itemAdapter: EntryItemAdapter
 
-    val SORT_PREF = "sort_pref"
-    var startSortSelection = 0
+    private val sortPreferenceTag = "sort_pref"
 
-    fun getSortPref() : Int {
-        val sharedPref = requireActivity().getSharedPreferences(SORT_PREF, 0)
+    private fun getSortPref() : Int {
+        val sharedPref = requireActivity().getSharedPreferences(sortPreferenceTag, 0)
         return sharedPref.getInt("sort_order", 0)
     }
-    fun setSortPref(prefVal: Int) {
-        val sharedPrefEdit = requireActivity().getSharedPreferences(SORT_PREF, 0).edit()
+    private fun setSortPref(prefVal: Int) {
+        val sharedPrefEdit = requireActivity().getSharedPreferences(sortPreferenceTag, 0).edit()
         sharedPrefEdit.putInt("sort_order", prefVal)
-        sharedPrefEdit.commit()
+        sharedPrefEdit.apply()
     }
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_entries, container, false)
 
-        val activityList : RecyclerView = view.findViewById(R.id.activityList);
+        val activityList : RecyclerView = view.findViewById(R.id.activityList)
         activityList.setHasFixedSize(true)
-
-        activityList.adapter = EntryItemAdapter(view.context, MainActivity.actData.entriesList);
+        itemAdapter = EntryItemAdapter(view.context, MainActivity.actData.entriesList)
+        activityList.adapter = itemAdapter
 
         val spinner: Spinner = view.findViewById(R.id.sortSpinner)
         ArrayAdapter.createFromResource(view.context, R.array.sort_array, android.R.layout.simple_spinner_item).also {
@@ -51,8 +48,9 @@ class EntriesFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        val activityList: RecyclerView = requireView().findViewById(R.id.activityList);
+        val activityList: RecyclerView = requireView().findViewById(R.id.activityList)
         when (pos)
         {
             0 -> { //Sort By Date Asc
@@ -72,4 +70,8 @@ class EntriesFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    override fun refreshList() {
+        itemAdapter.notifyDataSetChanged()
+    }
 }
