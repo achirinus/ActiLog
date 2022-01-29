@@ -1,20 +1,36 @@
 package com.achirinus.actilog.entry
 
+import java.time.LocalDateTime
 
-open class EntryItem (val type : EntryType, val date: EntryDateTime, val duration: EntryDuration, var tags: MutableList<EntryTag>){
+
+open class EntryItem (val type : EntryType, val date: EntryDateTime, var duration: EntryDuration, var tags: MutableList<EntryTag>){
 
     constructor() : this(EntryType.Running, EntryDateTime(), EntryDuration(), mutableListOf())
 
     open var info: String = ""
+    var status: EntryStatus = EntryStatus.Finished
+    var resumedDate:EntryDateTime = date
 
     fun getName(): String = type.getCustomName()
     fun getUID(): String {
         return "${type.name}-${date.toStringForPath()}"
     }
+
+    fun equals(other: EntryItem): Boolean {
+        if(type != other.type) return false
+        if(date.compareTo(other.date) != 0) return false
+
+        return true
+    }
+
+    fun durationToNow(): EntryDuration {
+        val dateNow = EntryDateTime(LocalDateTime.now())
+        var dur = dateNow.durationFrom(resumedDate)
+        return dur.add(duration)
+    }
 }
 
 class EntryItemBuilder {
-
     companion object {
         fun build(type: EntryType, date: EntryDateTime, duration: EntryDuration): EntryItem {
 

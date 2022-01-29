@@ -1,6 +1,8 @@
 package com.achirinus.actilog.entry
 
+import com.google.type.DateTime
 import java.time.LocalDateTime
+import java.util.*
 
 class EntryDateTime :Comparable<EntryDateTime>{
     var year = 0
@@ -17,6 +19,7 @@ class EntryDateTime :Comparable<EntryDateTime>{
         hour = date.hour
         minute = date.minute
         second = date.second
+
     }
     constructor() {
         year = 0
@@ -37,7 +40,31 @@ class EntryDateTime :Comparable<EntryDateTime>{
     fun toStringForPath() : String {
         return "${day}-${month}-${year}-${hour}:${minute}:${second}"
     }
+    //Ignores date
+    fun timeToSeconds() : Long {
+        var seconds: Long = 0
+        seconds += year * 31536000
+        seconds += month * 2592000
+        seconds += day * 86400
+        seconds += hour * 3600
+        seconds += minute * 60
+        seconds += second
 
+        return seconds
+    }
+
+    fun durationFrom(dateTime: EntryDateTime): EntryDuration {
+        var duration = EntryDuration()
+
+        val mySeconds = timeToSeconds()
+        val otherDateSeconds = dateTime.timeToSeconds()
+
+        if(mySeconds >= otherDateSeconds)
+        {
+            duration.fromSeconds((mySeconds - otherDateSeconds).toInt())
+        }
+        return duration
+    }
 
     override fun compareTo(other: EntryDateTime): Int {
         if(year > other.year)

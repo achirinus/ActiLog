@@ -19,4 +19,8 @@
         <item name="colorSurface">@color/almostBlack</item>
         <item name="colorOnSurface">@color/almostWhite</item>
     </style>
+    <style name="Theme.ActiveMe.NoAction">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

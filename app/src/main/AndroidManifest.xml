@@ -19,10 +19,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RestoreBackupActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.MainActivity"
+            android:theme="@style/Theme.ActiveMe.NoAction"
             android:exported="true"
             android:screenOrientation="portrait" >
 

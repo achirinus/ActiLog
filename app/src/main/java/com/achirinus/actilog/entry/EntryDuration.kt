@@ -8,15 +8,20 @@ class EntryDuration (var hours: Int, var minutes: Int, var seconds: Int){
         fun parseString( stringVal: String) : EntryDuration {
             val list = stringVal.split(":")
             val actDur = EntryDuration(0,0,0)
-            if(list.size < 3) throw Exception("Invalid duration input")
-            actDur.hours = list[0].toInt()
-            actDur.minutes = list[1].toInt()
-            actDur.seconds = list[2].toInt()
+            if(list.size == 3){
+                actDur.hours = list[0].toInt()
+                actDur.minutes = list[1].toInt()
+                actDur.seconds = list[2].toInt()
+            }
             return actDur
         }
     }
 
     constructor() : this(0,0, 0) {
+    }
+
+    fun toEditString() :String {
+        return "${hours}:${minutes}:${seconds}"
     }
 
     public override fun toString() : String {

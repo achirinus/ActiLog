@@ -56,6 +56,17 @@ class EntryDataLists {
         }
     }
 
+    fun removeStartedItems() {
+        runningList.removeIf {(it.status != EntryStatus.Finished) }
+        weightList.removeIf {(it.status != EntryStatus.Finished) }
+        treadList.removeIf {(it.status != EntryStatus.Finished) }
+        readingList.removeIf {(it.status != EntryStatus.Finished) }
+        bagList.removeIf {(it.status != EntryStatus.Finished) }
+        languageList.removeIf {(it.status != EntryStatus.Finished) }
+        skillList.removeIf {(it.status != EntryStatus.Finished) }
+        gamingList.removeIf {(it.status != EntryStatus.Finished) }
+    }
+
     fun remove(act: EntryItem) {
         when (act.type)
         {

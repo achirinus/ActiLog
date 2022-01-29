@@ -5,13 +5,15 @@
     android:id="@+id/profileMenuFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     tools:context=".fragments.TypeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/main_background"
+
+        android:background="@drawable/menu_background"
         android:backgroundTint="@color/almostWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

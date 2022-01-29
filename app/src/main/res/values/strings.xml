@@ -24,4 +24,11 @@
     <string name="small_pass">Password must have more than 5 characters</string>
     <string name="pass_not_match">Password does not match</string>
     <string name="missing_email">Email not registered</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="prompt_cancel">Cancel</string>
+    <string name="prompt_start">Start</string>
+    <string name="prompt_pause">Pause</string>
+    <string name="prompt_resume">Resume</string>
+    <string name="prompt_add">Add</string>
 </resources>

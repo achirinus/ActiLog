@@ -1,9 +1,12 @@
 package com.achirinus.actilog.fragments
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -21,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 
 
 class ProfileMenuFragment : Fragment() {
+    private val TAG = "ProfileMenuFragment"
 
     private lateinit var auth: FirebaseAuth
 
@@ -28,6 +32,7 @@ class ProfileMenuFragment : Fragment() {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
     }
+
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_profile_menu, container, false)
@@ -53,9 +58,24 @@ class ProfileMenuFragment : Fragment() {
             }
         }
 
-
+        view.setOnTouchListener { view, motionEvent ->
+            if(motionEvent.action == MotionEvent.ACTION_UP)
+            {
+                var sideFragmentRect = Rect(0,0,0,0)
+                view.getHitRect(sideFragmentRect)
+                val isIntersectingPointer = sideFragmentRect.contains(motionEvent.x.toInt(), motionEvent.y.toInt())
+                if(!isIntersectingPointer)
+                {
+                    Log.d(TAG, "Pressed outside of side fragment")
+                    val ft = requireActivity().supportFragmentManager.beginTransaction()
+                    ft.remove(this).commit()
+                }
+            }
+            true
+        }
 
         return view
     }
 
 }
+

@@ -9,6 +9,7 @@ class EntryData : ViewModel{
 
     var dataLists: EntryDataLists = EntryDataLists()
     var entriesList: MutableList<EntryItem> = mutableListOf()
+    var startedEntries: MutableList<EntryItem> = mutableListOf()
     constructor() {
         clearAll()
     }
@@ -24,7 +25,8 @@ class EntryData : ViewModel{
             typeMap[actType] = mutableListOf()
         }
         dataLists = EntryDataLists()
-        entriesList = mutableListOf()
+        entriesList.clear()
+        startedEntries.clear()
     }
 
     public fun getEntriesWithTag(tag: EntryTag) : List<EntryItem> {
@@ -35,7 +37,46 @@ class EntryData : ViewModel{
         return typeMap[type]!!.toList()
     }
 
+    fun getEntryIndex(entryItem: EntryItem): Int {
+        for(idx in entriesList.indices)
+        {
+            if(entriesList[idx] == entryItem)
+            {
+                return idx
+            }
+        }
+        return -1
+    }
+
+    fun getAtIndex(index: Int) : EntryItem? {
+        var res : EntryItem? = null
+
+        if(index < entriesList.size) {
+            res = entriesList[index]
+        }
+        return res
+    }
+
+    fun getStartedAtIndex(index: Int) : EntryItem? {
+        var res : EntryItem? = null
+
+        if(index < startedEntries.size) {
+            res = startedEntries[index]
+        }
+        return res
+    }
+
     public fun addEntry(act: EntryItem) {
+        if(act.status != EntryStatus.Finished)
+        {
+            startedEntries.add(act)
+            return
+        }
+        else
+        {
+            startedEntries.remove(act)
+        }
+
         entriesList.add(act)
         dataLists.add(act)
         for(actTag in  act.tags)
@@ -53,6 +94,20 @@ class EntryData : ViewModel{
             tagMap[actTag]?.remove(act)
         }
         typeMap[act.type]?.remove(act)
+    }
+
+    public fun removeStartedEntry(item: EntryItem) {
+        startedEntries.remove(item)
+    }
+
+    public fun updateStartedEntry(item: EntryItem) {
+        for(itemIdx in startedEntries.indices)
+        {
+            if(startedEntries[itemIdx].equals(item)){
+                startedEntries.set(itemIdx, item)
+                break
+            }
+        }
     }
 
     public fun fromLists(actLists: EntryDataLists) {
@@ -90,6 +145,7 @@ class EntryData : ViewModel{
         {
             addEntry(act)
         }
+        actLists.removeStartedItems()
     }
 
     fun getAlreadyEnteredItemArray(type: EntryType) :Array<String> {

@@ -9,10 +9,8 @@
         app:showAsAction="always"
         android:title="Add"/>
     <item
-        android:id="@+id/menuProfile"
-        android:icon="@android:drawable/ic_menu_recent_history"
+        android:id="@+id/menuProgress"
+        android:icon="@android:drawable/ic_menu_view"
         app:showAsAction="always"
-        app:actionLayout="@layout/menu_item_profile"
-        android:title="Profile">
-    </item>
+        android:title="Add"/>
 </menu>

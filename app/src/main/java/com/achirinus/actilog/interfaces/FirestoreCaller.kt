@@ -6,10 +6,15 @@ import com.achirinus.actilog.entry.EntryItem
 
 interface FirestoreCaller {
 
+
     fun getUser() :ActiLogUser {return ActiLogUser()}
 
     fun onAddEntrySuccess(item: EntryItem) {}
     fun onAddEntryFail() {}
+    fun onUpdateEntrySuccess(item: EntryItem) {}
+    fun onUpdateEntryFail() {}
+    fun onFinishEntrySuccess(item: EntryItem) {}
+    fun onFinishEntryFail() {}
     fun onRemoveEntrySuccess(item: EntryItem) {}
     fun onRemoveEntryFail() {}
     fun onLoadEntriesSuccess(entries: EntryDataLists) {}

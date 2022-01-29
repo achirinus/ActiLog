@@ -23,6 +23,28 @@ object FirestoreDAO {
         }
     }
 
+    fun updateEntry(item: EntryItem, caller: FirestoreCaller) {
+        var task = db.collection(userCollectionName).document(caller.getUser().getID())
+            .collection(userEntryCollectionName).document(item.getUID()).set(item)
+        task = task.addOnSuccessListener {
+            caller.onUpdateEntrySuccess(item)
+        }
+        task.addOnFailureListener {
+            caller.onUpdateEntryFail()
+        }
+    }
+
+    fun finishEntry(item: EntryItem, caller: FirestoreCaller) {
+        var task = db.collection(userCollectionName).document(caller.getUser().getID())
+            .collection(userEntryCollectionName).document(item.getUID()).set(item)
+        task = task.addOnSuccessListener {
+            caller.onFinishEntrySuccess(item)
+        }
+        task.addOnFailureListener {
+            caller.onFinishEntryFail()
+        }
+    }
+
     fun addUser(item: ActiLogUser, caller: FirestoreCaller) {
 
         var task = db.collection(userCollectionName).document(item.getID()).set(item)
@@ -76,8 +98,6 @@ object FirestoreDAO {
                 {
                     entries.add(entryItem)
                 }
-
-                val obj = doc.toObject(EntryItem::class.java)
             }
             caller.onLoadEntriesSuccess(entries)
         }
